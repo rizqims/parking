@@ -39,22 +39,17 @@ class Program
     {
         do
         {
+            home();
             var res = checkInput();
             menu(res.Item1, res.Item2);
         } while (isActive);
-        testi();
     }
 
-    static void testi()
+    static void home()
     {
-        List<string> uh = new List<string>{
-            "a",
-            "b",
-            "c",
-            "d"
-        };
 
     }
+
 
     static (string, string) checkInput()
     {
@@ -114,7 +109,7 @@ class Program
                 createParkLot(input);
                 break;
             case "park":
-                if (vehicleList.Count() >= parkingLot && vehicleList[parkingLot-1] != null)
+                if (vehicleList.Count() >= parkingLot && vehicleList[parkingLot - 1] != null)
                 {
                     Console.WriteLine("Sorry, parking lot is full");
                     return;
@@ -429,10 +424,18 @@ class Program
         Console.WriteLine(new string('-', 55)); // Table header separator        
         foreach (var item in vehicleList)
         {
-            Console.WriteLine("{0,-15} {1,-15} {2,-15} {3,-5}", item.Slot, item.Plat, item.Type, item.Color);
+            if (item == null)
+            {
+                Console.WriteLine($"empty");
+            }
+            else
+            {
+                Console.WriteLine("{0,-15} {1,-15} {2,-15} {3,-5}", item.Slot, item.Plat, item.Type, item.Color);
+            }
         }
     }
 
+    // for test only method
     static void List()
     {
         foreach (var item in vehicleList)
