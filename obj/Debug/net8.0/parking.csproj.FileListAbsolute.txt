@@ -1,0 +1,14 @@
+C:\p\cs\parking\bin\Debug\net8.0\parking.exe
+C:\p\cs\parking\bin\Debug\net8.0\parking.deps.json
+C:\p\cs\parking\bin\Debug\net8.0\parking.runtimeconfig.json
+C:\p\cs\parking\bin\Debug\net8.0\parking.dll
+C:\p\cs\parking\bin\Debug\net8.0\parking.pdb
+C:\p\cs\parking\obj\Debug\net8.0\parking.GeneratedMSBuildEditorConfig.editorconfig
+C:\p\cs\parking\obj\Debug\net8.0\parking.AssemblyInfoInputs.cache
+C:\p\cs\parking\obj\Debug\net8.0\parking.AssemblyInfo.cs
+C:\p\cs\parking\obj\Debug\net8.0\parking.csproj.CoreCompileInputs.cache
+C:\p\cs\parking\obj\Debug\net8.0\parking.dll
+C:\p\cs\parking\obj\Debug\net8.0\refint\parking.dll
+C:\p\cs\parking\obj\Debug\net8.0\parking.pdb
+C:\p\cs\parking\obj\Debug\net8.0\parking.genruntimeconfig.cache
+C:\p\cs\parking\obj\Debug\net8.0\ref\parking.dll
