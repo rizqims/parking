@@ -12,3 +12,4 @@ C:\p\cs\parking\obj\Debug\net8.0\refint\parking.dll
 C:\p\cs\parking\obj\Debug\net8.0\parking.pdb
 C:\p\cs\parking\obj\Debug\net8.0\parking.genruntimeconfig.cache
 C:\p\cs\parking\obj\Debug\net8.0\ref\parking.dll
+C:\p\cs\parking\obj\Debug\net8.0\parking.sourcelink.json

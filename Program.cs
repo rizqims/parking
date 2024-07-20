@@ -42,16 +42,18 @@ class Program
             var res = checkInput();
             menu(res.Item1, res.Item2);
         } while (isActive);
-        // testi();
+        testi();
     }
 
     static void testi()
     {
-        string a = "hel--pardner";
-        string p = @"\w{4}";
+        List<string> uh = new List<string>{
+            "a",
+            "b",
+            "c",
+            "d"
+        };
 
-        var res = Regex.Match(a, p);
-        Console.WriteLine(res);
     }
 
     static (string, string) checkInput()
@@ -112,7 +114,7 @@ class Program
                 createParkLot(input);
                 break;
             case "park":
-                if (occupiedLot >= parkingLot)
+                if (vehicleList.Count() >= parkingLot && vehicleList[parkingLot-1] != null)
                 {
                     Console.WriteLine("Sorry, parking lot is full");
                     return;
@@ -194,40 +196,43 @@ class Program
             var getType = Regex.Match(input, typePattern);
 
             int slotNum = occupiedLot + 1;
-            // int slotNum = 1;
-            // int prevIndex = 1;
-            // if (vehicleList.Count == 0)
-            // {
-            //     slotNum = 1;
-            // }
-            // else
-            // {
-            //     foreach (var item in vehicleList)
-            //     {
-            //         int index = Convert.ToInt32(item.Slot);
-            //         Console.WriteLine($"index {index}");
 
-            //         int oldIndex = prevIndex + 1;
-            //         if (oldIndex != index)
-            //         {
-            //             slotNum = oldIndex;
-            //             Console.WriteLine($"i get called");
+            // skenario 1,3 lot 3
+            // skenario 4 lot 5
+            // skenario 2,3 lot 3
 
-            //         }
-            //         prevIndex = index;
-            //     }
-            // }
+            // int slotNum = 0; //2
+            if (vehicleList.Count == 0)
+            {
+                slotNum = 1;
+            }
+            else
+            {
+                bool isAdded = false;
+                for (int i = 0; i < vehicleList.Count; i++)//1
+                {
+                    if (vehicleList[i] == null)
+                    {
+                        slotNum = i + 1;
+                        // Console.WriteLine($"this get calld");
+
+                        Vehicle missingVehicle = new Vehicle(getPlat.Value.ToUpper(), getColor.Value.ToLower(), getType.Value.ToLower(), slotNum);
+                        vehicleList[i] = missingVehicle;
+                        isAdded = true;
+                        Console.WriteLine($"Allocated slot number: {slotNum}");
+                        break;
+                    }
+                }
+                if (isAdded)
+                {
+                    return;
+                }
+            }
 
             Vehicle vehicle = new Vehicle(getPlat.Value.ToUpper(), getColor.Value.ToLower(), getType.Value.ToLower(), slotNum);
-
-            // add vehicle to vehicleList
             vehicleList.Add(vehicle);
-
             // set occupiedLot
             occupiedLot = vehicleList.Count;
-
-
-            Console.WriteLine(vehicle.Slot);
 
             Console.WriteLine($"Allocated slot number: {slotNum}");
         }
@@ -246,17 +251,29 @@ class Program
             string slotPattern = @"\d{1,}$";
             var getSlot = Regex.Match(input, slotPattern);
 
-            Vehicle leavingVehicle = null;
-            foreach (Vehicle v in vehicleList)
+            // Vehicle leavingVehicle = null;
+            // foreach (Vehicle v in vehicleList)
+            // {
+            //     if (v.Slot == Convert.ToInt32(getSlot.Value))
+            //     {
+            //         leavingVehicle = v;
+
+            //         break;
+            //     }
+            // }
+
+            for (int i = 0; i < vehicleList.Count; i++)
             {
-                if (v.Slot == Convert.ToInt32(getSlot.Value))
+                if (vehicleList[i] == null)
                 {
-                    leavingVehicle = v;
-                    break;
+                    continue;
+                }
+                if (vehicleList[i].Slot == Convert.ToInt32(getSlot.Value))
+                {
+                    vehicleList[i] = null;
                 }
             }
-            vehicleList.Remove(leavingVehicle);
-            occupiedLot -= 1;
+            // vehicleList.Remove(leavingVehicle);
             Console.WriteLine($"Slot number {getSlot.Value} is free");
         }
     }
@@ -420,7 +437,14 @@ class Program
     {
         foreach (var item in vehicleList)
         {
-            Console.WriteLine($"{item.Slot}");
+            if (item == null)
+            {
+                Console.WriteLine($"empty");
+            }
+            else
+            {
+                Console.WriteLine($"{item.Slot}");
+            }
         }
     }
 }
