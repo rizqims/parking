@@ -42,12 +42,29 @@ class Program
             home();
             var res = checkInput();
             menu(res.Item1, res.Item2);
+            Thread.Sleep(500);
+            Console.Clear();
         } while (isActive);
     }
 
     static void home()
     {
-
+        Console.WriteLine(new string('-', 55));
+        Console.WriteLine($"PARKING SYSTEM");
+        Console.WriteLine(new string('-', 55));
+        Console.WriteLine($"");
+        Console.WriteLine($"available commands: ");
+        Console.WriteLine($"create_parking_lot [number-of-lot]"); 
+        Console.WriteLine($"park [plate] [color] [type]"); 
+        Console.WriteLine($"leave [slot]"); 
+        Console.WriteLine($"status"); 
+        Console.WriteLine($"type_of_vehicles [type]"); 
+        Console.WriteLine($"registration_numbers_for_vehicles_with_color [color]");
+        Console.WriteLine($"registration_numbers_for_vehicles_with_[odd/even]_plate");
+        Console.WriteLine($"slot_number_for_registration_number [plate]");
+        Console.WriteLine($"slot_number_for_vehicles_with_color [color]");
+        Console.WriteLine($"");
+        Console.WriteLine(new string('-', 55));
     }
 
 
@@ -157,7 +174,12 @@ class Program
         string checkPattern = @"^create_parking_lot\s\d{1,}$";
         if (!Regex.IsMatch(input, checkPattern))
         {
-            Console.WriteLine("command is wrong! use create_parking_lot {number-of-lot}");
+            Console.WriteLine("command is wrong! use create_parking_lot [number-of-lot]");
+            return;
+        }
+        else if(parkingLot != 0)
+        {
+            Console.WriteLine($"cannot assign more parking lot!");
             return;
         }
         else
@@ -167,6 +189,8 @@ class Program
             if (parkingLot > 50)
             {
                 Console.WriteLine("cannot create more than 50 lots!");
+                parkingLot = 0;
+                return;
             }
             Console.WriteLine($"Created a parking lot with {parkingLot} slot");
         }
@@ -177,7 +201,7 @@ class Program
         string checkPattern = @"^park\s\w{1}\-\d{4}\-\w{3}\s\w{4,}\s\w{5}$";
         if (!Regex.IsMatch(input, checkPattern))
         {
-            Console.WriteLine("command is wrong! use park [uhh]-[num]-[word] [color] [type]");
+            Console.WriteLine("command is wrong! use park [plate] [color] [type]");
             return;
         }
         else
@@ -310,14 +334,13 @@ class Program
         }
         else
         {
-            string colorPattern = @"\w{5}$";
-            var getPlat = Regex.Match(input, colorPattern);
-            Console.WriteLine($"{getPlat.Value}");
+            string colorPattern = @"\w{4,}$";
+            var getColor = Regex.Match(input, colorPattern);
 
             List<string>? regNum = new List<string>();
             foreach (var item in vehicleList)
             {
-                if (item.Color == getPlat.Value.ToLower())
+                if (item.Color == getColor.Value.ToLower())
                 {
                     regNum.Add(item.Plat);
                     Console.Write($"{item.Plat}, ");
@@ -403,7 +426,7 @@ class Program
         }
         else
         {
-            string colorPattern = @"\w{5}$";
+            string colorPattern = @"\w{4,}$";
             string getColor = Regex.Match(input, colorPattern).Value;
             Console.WriteLine($"{getColor}");
 
@@ -420,6 +443,7 @@ class Program
 
     static void status()
     {
+        Console.Clear();
         Console.WriteLine("{0,-15} {1,-15} {2,-15} {3,-5}", "Slot", "Plate", "Type", "Color");
         Console.WriteLine(new string('-', 55)); // Table header separator        
         foreach (var item in vehicleList)
